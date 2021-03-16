@@ -1,0 +1,119 @@
+﻿Programação Orientada a Objetos
+Atividade Contínua 01
+
+
+Data de Entrega: 28/02/2021 (23:59)
+Grupos: máximo 5 alunos
+______________________________________________________________________________________
+Objetivos:
+Utilizar boas práticas na resolução de problemas que envolvem conceitos de funções, listas, tuplas, dicionários e módulos.
+
+
+Tarefa:
+Implementar as funções presentes no arquivo do módulo ac01.py de acordo com a descrição apresentada abaixo (faça download do arquivo ac01.py e implemente as funções solicitadas).
+
+
+Observação:
+O arquivo ac01.py deve conter apenas a implementação das funções.
+O preenchimento dos dados, interação com o usuário e chamadas das funções devem ficar em outro arquivo, onde o módulo ac01.py deve ser importado (esse outro arquivo não precisa ser entregue).
+
+
+Descrição:
+1. Escreva uma função com o nome pertence, que recebe como argumentos de entrada uma tupla
+ e dois itens e retorna True, se os dois itens estiverem armazenado na tupla, e False,
+ caso contrário.
+Exemplo:
+tupla = (2, 3, 4)
+pertence(tupla, 2, 4)                                # chamada da função 
+True                                                # retorno
+
+
+tupla = (2, 3, 4)
+pertence(tupla, 2, 5)                                # chamada da função
+False                                               # retorno
+
+
+tupla = (2, 3, 4)
+pertence(tupla, 1, 5)                                # chamada da função
+False                                               # retorno
+
+
+2. Escreva uma função chamada substituir que recebe como argumentos de 
+entrada uma lista e dois itens (velho e novo) e retorna uma lista
+onde todas as ocorrências do item velho são substituídas pelo item novo. 
+Exemplo:
+lista = [1, 2, 3, 2, 4]
+substituir(lista, 2, 99)                         # chamada da função
+[1, 99, 3, 99, 4]                                       # retorno
+
+
+lista = [1, 2, 2, 4]
+substituir(lista, 2, 'abc')                      # chamada da função
+[1, 'abc', 'abc', 4]                                     # retorno
+
+
+3. Escreva uma função chamada posicoes_lista que recebe como argumentos de
+ entrada uma lista e um item, e retorna uma tupla contendo todas os índices
+  em que o item aparece na lista. 
+Exemplo:
+lista = ['a', 2, 'b', 'a', 'a']
+posicoes_lista(lista, 'a')                    # chamada da função
+(0, 3, 4)                                     # retorno
+
+
+4. Suponha um dicionário onde a chave é o nome de um aluno e o valor 
+uma lista de notas. Escreva uma função chamada reprovados que recebe 
+como argumento de entrada um dicionário e retorna uma 
+lista com o nome dos alunos reprovados 
+(um aluno é reprovado quando a média das suas notas é inferior a 6). 
+Exemplo:
+nome       chave        valor
+alunos = {'Augusto': [4.5, 7.0, 6.0, 3.0],
+          'Denise': [9.0, 8.5],
+          'Ana Paula': [3.5, 1.0, 6.5],
+          'Marcelo': [9.0, 10.0, 7.0, 7.0]}
+reprovados(alunos)                                     # chamada da função
+['Augusto', 'Ana Paula']                             # retorno
+
+
+5. Suponha um dicionário onde a chave é o nome de um aluno e o valor uma 
+lista de notas. Escreva uma função chamada incluir_nota que recebe como 
+argumentos de entrada o dicionário, o nome de um aluno e uma nota. A função deve 
+inserir a nota na lista de notas do aluno correspondente e retornar o dicionário 
+com as alterações realizadas.
+Exemplo:
+alunos = {'Augusto': [4.5, 7.0, 6.0, 3.0], 
+          'Denise': [9.0, 8.5], 
+          'Ana Paula': [3.5, 1.0, 6.5],
+          'Marcelo': [9.0, 10.0, 7.0, 7.0]}
+incluir_nota(alunos, 'Denise', 10.0)                # chamada da função
+{'Augusto': [4.5, 7.0, 6.0, 3.0],             # retorno
+ 'Denise': [9.0, 8.5, 10.0],
+ 'Ana Paula': [3.5, 1.0, 6.5],
+ 'Marcelo': [9.0, 10.0, 7.0, 7.0]}
+
+
+6. Suponha um dicionário onde a chave é o nome de um aluno e o valor 
+uma lista de notas. Escreva uma função chamada menores_notas que recebe 
+como argumentos de entrada o dicionário e retorna outro dicionário 
+com a menor nota de cada aluno.
+Exemplo:
+alunos = {'Augusto': [4.5, 7.0, 6.0, 3.0], 
+          'Denise': [9.0, 8.5], 
+          'Ana Paula': [3.5, 1.0, 6.5],
+          'Marcelo': [9.0, 10.0, 7.0, 7.0]}
+menores_notas(alunos)                                # chamada da função
+{'Augusto': 3.0,                                         # retorno
+ 'Denise': 8.5,
+ 'Ana Paula': 1.0,
+ 'Marcelo': 7.0}
+______________________________________________________________________________________
+Atenção: 
+* Não serão aceitos trabalhos entregues em atraso.
+* Insira no início do arquivo um comentário com os nomes dos alunos do grupo.
+* O arquivo do módulo ac01.py não deve ter código executável, como inputs e prints (o arquivo deve conter apenas as funções implementadas). Caso haja código executável, haverá um desconto de 2 pontos na nota final.
+* O nome do arquivo ac01.py e das funções contidas nesse arquivo não devem ser alterados. Caso algum nome seja alterado, haverá desconto de 1 ponto na nota final.
+* Caso seja identificada cópia de trabalhos entre os grupos, a nota será zerada.
+Forma de Entrega:
+* Anexar no Classroom apenas o arquivo ac01.py com a implementação das funções solicitadas.
+* Pode ser enviado por apenas um integrante do grupo (mas não esqueça de colocar o nome de todos os integrantes do grupo no início do arquivo)
