@@ -13,7 +13,7 @@ class Veiculo:
     def exibir_dados(self):
         print('Ano: ', self.ano)
         print('Preço: ', self.preco)
-        print('Ciçindrada do Motor: ', self.motor.cilindrada)
+        print('Cilindrada do Motor: ', self.motor.cilindrada)
         print('Potencia do Motor: ', self.motor.potencia)
 
 
