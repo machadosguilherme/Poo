@@ -124,6 +124,9 @@ class Aluno(Pessoa, Matricula):
             print(self.peso)
 
 
+guilherme = Aluno('gui', 3298, '17/3/98', 119999999,
+                  12345, '01/8/20', 5, 'Rua', 1.75, 80)
+
 musculacao = Turma(10, 'As 13:00 e as 19:00', 'duração de 10 minutos',
                    '01/05/2021', '30/05/2021', 'Musculação')
 
@@ -142,19 +145,17 @@ Instrutor3 = Instrutor('Gabriel', '32.123.01',
 Instrutor4 = Instrutor('Mario', '32.123.99',
                        '10/09/1974', 1199999999, 'Professor')
 
-Instrutor1.turma_atribuida(musculacao.tipo)
-
-
 natacao = Turma(
     30, 'As 14:00 e as 20:00', 'duração de 1 hora',
     '01/05/2021', '30/05/2021', 'Natação'
 )
-guilherme = Aluno('gui', 3298, '17/3/98', 119999999,
-                  12345, '01/8/20', 5, 'Rua', 1.75, 80)
+
 
 teste = natacao.atribuir_instrutor(Instrutor1.nome)
 
 natacao.exibir()
+
+Instrutor1.turma_atribuida(musculacao.tipo)
 
 teste2 = natacao.atribuir_instrutor(Instrutor2.nome)
 print(teste2)
