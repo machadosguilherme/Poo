@@ -22,23 +22,6 @@ Base = declarative_base(engine)
 session = Session()
 
 
-# Classe para interação com o Banco de Dados
-class BancoDeDados:
-    def criar_tabela(self):
-        # Cria a tabela FILME no banco de dados
-        connection.execute("""CREATE TABLE IF NOT EXISTS FILME(
-                              ID INTEGER PRIMARY KEY,
-                              TITULO VARCHAR(255) NOT NULL,
-                              ANO INT NOT NULL,
-                              GENERO VARCHAR(255) NOT NULL,
-                              DURACAO INT NOT NULL,
-                              PAIS VARCHAR(255) NOT NULL,
-                              DIRETOR VARCHAR(255) NOT NULL,
-                              ELENCO VARCHAR(255) NOT NULL,
-                              AVALIACAO FLOAT NOT NULL,
-                              VOTOS INT NOT NULL)""")
-
-
 class Filme(Base):
 
     # FAZER O MAPEAMENTO DA TABELA
@@ -56,7 +39,17 @@ class Filme(Base):
 
     # Método construtor
 
-    def __init__(self, titulo, ano, genero, duracao, pais, diretor, elenco, avaliacao, votos):
+    def __init__(
+            self,
+            titulo,
+            ano,
+            genero,
+            duracao,
+            pais,
+            diretor,
+            elenco,
+            avaliacao,
+            votos):
         self.titulo = titulo
         self.ano = ano
         self.genero = genero
@@ -67,12 +60,29 @@ class Filme(Base):
         self.avaliacao = avaliacao
         self.votos = votos
 
+
+# Classe para interação com o Banco de Dados
+class BancoDeDados:
+    def criar_tabela(self):
+        # Cria a tabela FILME no banco de dados
+        connection.execute("""CREATE TABLE IF NOT EXISTS FILME(
+                              ID INTEGER PRIMARY KEY,
+                              TITULO VARCHAR(255) NOT NULL,
+                              ANO INT NOT NULL,
+                              GENERO VARCHAR(255) NOT NULL,
+                              DURACAO INT NOT NULL,
+                              PAIS VARCHAR(255) NOT NULL,
+                              DIRETOR VARCHAR(255) NOT NULL,
+                              ELENCO VARCHAR(255) NOT NULL,
+                              AVALIACAO FLOAT NOT NULL,
+                              VOTOS INT NOT NULL)""")
+
     def incluir(self, filme):
         '''
         Recebe um objeto Filme e armazena esse
         objeto no banco de dados.
         '''
-        session.add(self.filme)
+        session.add(filme)
         session.commit()
 
     def incluir_lista(self, filmes):
@@ -80,7 +90,7 @@ class Filme(Base):
         Recebe uma lista de objetos Filme e armazena esses
         objetos no banco de dados
         '''
-        session.add_all(self.filmes)
+        session.add_all(filmes)
         session.commit()
 
     def alterar_avaliacao(self, filme, avaliacao):
@@ -88,15 +98,15 @@ class Filme(Base):
         Recebe um objeto filme e altera sua avaliação de
         acordo com o valor do parametro avaliacao
         '''
-        self.filme.avaliacao = avaliacao
+        
+        return
 
     def excluir(self, id):
         '''
         Recebe o id de um filme e exclui o filme correspondente
         do banco de dados
         '''
-        session.delete(self.id)
-
+        pass
 
     def buscar_todos(self):
         '''
@@ -104,14 +114,31 @@ class Filme(Base):
         lista de objetos Filme com todos os registros,
         ordenados de forma crescente pelo titulo.
         '''
-        pass
+        lista = []
+        resultado = session.query(Filme).order_by(Filme.titulo)
+        for x in resultado:
+            lista.append(x)
+        return lista
 
     def buscar_por_id(self, id):
         '''
         Realiza busca no banco de dados e retorna um
         objeto Filme de acordo com o seu id
         '''
-        pass
+        filme = ''
+        resultado2 = session.query(Filme).filter(Filme.id == id)
+        for x in resultado2:
+            filme = x.id,
+            x.titulo,
+            x.ano,
+            x.genero,
+            x.duracao,
+            x.pais,
+            x.diretor,
+            x.elenco,
+            x.avaliacao,
+            x.votos
+        return filme
 
     def buscar_por_ano(self, ano):
         '''
@@ -119,7 +146,13 @@ class Filme(Base):
         lista de objetos Filme de um ano específico,
         ordenado pelo ID de forma crescente
         '''
-        pass
+        lista1 = []
+        resultado3 = session.query(Filme).filter(
+            Filme.ano == ano
+            ).order_by(Filme.id)
+        for x in resultado3:
+            lista1.append(x)
+        return lista1
 
     def buscar_por_genero(self, genero):
         '''
@@ -127,7 +160,11 @@ class Filme(Base):
         lista de objetos Filme de um gênero específico,
         ordenados pelo titulo de forma crescente
         '''
-        pass
+        lista = []
+        resultado = session.query(Filme).filter(Filme.genero == genero).order_by(Filme.titulo)
+        for x in resultado:
+            lista.append(x)
+        return lista
 
     def buscar_por_elenco(self, ator):
         '''
@@ -135,7 +172,11 @@ class Filme(Base):
         lista de objetos Filme que tenha um determinado ator/atriz como parte
         do elenco, ordenados pelo ano de lançamento em ordem crescente
         '''
-        pass
+        lista3 = []
+        resultado5 = session.query(Filme).filter(ator.in_(session.query(Filme.elenco)).order_by(Filme.ano))
+        for x in resultado5:
+            lista3.append(x)
+        return lista3
 
     def buscar_melhores_do_ano(self, ano):
         '''
@@ -146,7 +187,13 @@ class Filme(Base):
         DICA - utilize a função:
             .order_by(desc(Filme.avaliacao))
         '''
-        pass
+        lista4 = []
+        resultado6 = session.query(Filme).filter(
+            Filme.ano == ano, Filme.avaliacao >= 90.00
+            ).order_by(desc(Filme.avaliacao))
+        for x in resultado6:
+            lista4.append(x)
+        return lista4
 
     def exportar_filmes(self, nome_arquivo):
         '''
@@ -155,7 +202,20 @@ class Filme(Base):
         dos filmes, contendo os dados de cada filme em uma linha, no formato:
         titulo;year;genero;duracao;país;diretor;elenco;avaliacao;votos
         '''
-        pass
+        arquivo = open('filmessaida.txt', 'w', encoding='UTF-8')
+        resultado7 = session.query(Filme).order_by(Filme.titulo)
+        for x in resultado7:
+            arquivo.write(
+                x.titulo + ';' +
+                str(x.ano) + ';' +
+                x.genero + ';' +
+                str(x.duracao) + ';' +
+                x.pais + ';' +
+                x.diretor + ';' +
+                x.elenco + ';' +
+                str(x.avaliacao) + ';' +
+                str(x.votos) + ';' '\n')
+        return
 
     def importar_filmes(self, nome_arquivo):
         '''
@@ -164,43 +224,105 @@ class Filme(Base):
         Considere que o arquivo contém uma listagem de filmes no formato:
         titulo;year;genero;duracao;país;diretor;elenco;avaliacao;votos
         '''
-        pass
-
+        arquivo2 = open(nome_arquivo, 'r', encoding='UTF-8')
+        filmes1 = []
+        for line in arquivo2:
+            lista = line.split(';')
+            filmes = Filme(
+                    lista[0],
+                    int(lista[1]),
+                    lista[2],
+                    int(lista[3]),
+                    lista[4],
+                    lista[5],
+                    lista[6],
+                    float(lista[7]),
+                    int(lista[8])
+                    )
+            filmes1.append(filmes)
+        session.add_all(filmes1)
+        return filmes
 
 # EXEMPLO DE PROGRAMA PRINCIPAL
+
+
 banco = BancoDeDados()
 banco.criar_tabela()
 banco.importar_filmes('movies.txt')
 
-# Busca todos os filmes
+filme = Filme('Veloses', 00, 'acao', 96, 'USA', 'Eu', '(Gui, carol, eu, nois)', 95, 250)
+filme2 = Filme('Crepuscilo', 11, 'drama', 56, 'USA', 'naosei', '(edward, bella)', 00, 300)
+
+teste = [filme, filme2]
+
+'''banco.incluir(filme)'''
+banco.incluir_lista(teste)
+
+'''# Busca todos os filmes
 lista = banco.buscar_todos()
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)
-
-# Busca por ano
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)
+'''
+'''# Busca por ano
 lista = banco.buscar_por_ano(2019)
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
-# Busca por genero
+'''# Busca por genero
 lista = banco.buscar_por_genero('Crime')
 print('-'*60)
 for f in lista:         # exibe lista de filmes
     print(f.id, f.titulo, f.ano, f.genero)
-
-# Busca por elenco
+'''
+'''# Busca por elenco
 lista = banco.buscar_por_elenco('Nicole')
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
-# Busca melhores do ano
+'''# Busca melhores do ano ################################################# resolvido
 lista = banco.buscar_melhores_do_ano('2019')
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
 
 banco.exportar_filmes('saida.txt')
