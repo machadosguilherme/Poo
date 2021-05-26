@@ -218,15 +218,17 @@ class BancoDeDados:
         filmes1 = []
         for line in arquivo2:
             lista = line.split(';')
-            filmes = Filme( lista[0],
-                            int(lista[1]),
-                            lista[2],
-                            int(lista[3]),
-                            lista[4],
-                            lista[5],
-                            lista[6],
-                            float(lista[7]),
-                            int(lista[8]))
+            filmes = Filme(
+                    lista[0],
+                    int(lista[1]),
+                    lista[2],
+                    int(lista[3]),
+                    lista[4],
+                    lista[5],
+                    lista[6],
+                    float(lista[7]),
+                    int(lista[8])
+                    )
             filmes1.append(filmes)
         session.add_all(filmes1)
         return filmes
@@ -242,13 +244,31 @@ banco.importar_filmes('movies.txt')
 '''lista = banco.buscar_todos()
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)'''
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
 '''# Busca por ano
 lista = banco.buscar_por_ano(2019)
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)'''
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
 # Busca por genero
 lista = banco.buscar_por_genero('Crime')
@@ -260,13 +280,31 @@ for f in lista:         # exibe lista de filmes
 lista = banco.buscar_por_elenco('Nicole')
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)'''
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)'''
 
 '''# Busca melhores do ano #################################################
 lista = banco.buscar_melhores_do_ano('2019')
 print('-'*60)
 for f in lista:         # exibe lista de filmes
-    print(f.id, f.titulo, f.ano, f.genero, f.duracao, f.pais, f.diretor, f.elenco, f.avaliacao, f.votos)
+    print(f.id,
+    f.titulo,
+    f.ano,
+    f.genero,
+    f.duracao,
+    f.pais,
+    f.diretor,
+    f.elenco,
+    f.avaliacao,
+    f.votos)
 '''
 
 banco.exportar_filmes('saida.txt')
