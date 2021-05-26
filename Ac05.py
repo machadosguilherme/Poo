@@ -22,6 +22,23 @@ Base = declarative_base(engine)
 session = Session()
 
 
+# Classe para interação com o Banco de Dados
+class BancoDeDados:
+    def criar_tabela(self):
+        # Cria a tabela FILME no banco de dados
+        connection.execute("""CREATE TABLE IF NOT EXISTS FILME(
+                              ID INTEGER PRIMARY KEY,
+                              TITULO VARCHAR(255) NOT NULL,
+                              ANO INT NOT NULL,
+                              GENERO VARCHAR(255) NOT NULL,
+                              DURACAO INT NOT NULL,
+                              PAIS VARCHAR(255) NOT NULL,
+                              DIRETOR VARCHAR(255) NOT NULL,
+                              ELENCO VARCHAR(255) NOT NULL,
+                              AVALIACAO FLOAT NOT NULL,
+                              VOTOS INT NOT NULL)""")
+
+
 class Filme(Base):
 
     # FAZER O MAPEAMENTO DA TABELA
@@ -29,7 +46,7 @@ class Filme(Base):
     id = Column("ID", Integer, autoincrement=True, primary_key=True)
     titulo = Column("TITULO", String(255), nullable=False)
     ano = Column("ANO", Integer, nullable=False)
-    genero = Column("GENERO". String(255), nullable=False)
+    genero = Column("GENERO", String(255), nullable=False)
     duracao = Column("DURACAO", Integer, nullable=False)
     pais = Column("PAIS", String(255), nullable=False)
     diretor = Column("DIRETOR", String(255), nullable=False)
@@ -50,29 +67,12 @@ class Filme(Base):
         self.avaliacao = avaliacao
         self.votos = votos
 
-
-# Classe para interação com o Banco de Dados
-class BancoDeDados:
-    def criar_tabela(self):
-        # Cria a tabela FILME no banco de dados
-        connection.execute("""CREATE TABLE IF NOT EXISTS FILME(
-                              ID INTEGER PRIMARY KEY,
-                              TITULO VARCHAR(255) NOT NULL,
-                              ANO INT NOT NULL,
-                              GENERO VARCHAR(255) NOT NULL,
-                              DURACAO INT NOT NULL,
-                              PAIS VARCHAR(255) NOT NULL,
-                              DIRETOR VARCHAR(255) NOT NULL,
-                              ELENCO VARCHAR(255) NOT NULL,
-                              AVALIACAO FLOAT NOT NULL,
-                              VOTOS INT NOT NULL)""")
-
     def incluir(self, filme):
         '''
         Recebe um objeto Filme e armazena esse
         objeto no banco de dados.
         '''
-        session.add(filme)
+        session.add(self.filme)
         session.commit()
 
     def incluir_lista(self, filmes):
@@ -80,7 +80,7 @@ class BancoDeDados:
         Recebe uma lista de objetos Filme e armazena esses
         objetos no banco de dados
         '''
-        session.add_all(filmes)
+        session.add_all(self.filmes)
         session.commit()
 
     def alterar_avaliacao(self, filme, avaliacao):
@@ -88,14 +88,14 @@ class BancoDeDados:
         Recebe um objeto filme e altera sua avaliação de
         acordo com o valor do parametro avaliacao
         '''
-        filme.avaliacao = avaliacao
+        self.filme.avaliacao = avaliacao
 
     def excluir(self, id):
         '''
         Recebe o id de um filme e exclui o filme correspondente
         do banco de dados
         '''
-        pass
+        session.delete(self.id)
 
 
     def buscar_todos(self):
